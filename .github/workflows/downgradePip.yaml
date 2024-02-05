@@ -1,0 +1,40 @@
+name: "Downgrade Pip"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-python-packages:
+    name: Downgrade Pip
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: List Python and PIP versions
+        run: |
+          python3 --version
+          pip --version
+          pip3 --version
+
+          which python3
+          which pip
+          which pip3
+
+          ls -al /opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages
+
+      - name: Downgrade Pip
+        run: |
+          python3 -m pip install --ignore-installed --upgrade pip==23.0.1
+
+      - name: List Python and PIP versions
+        run: |
+          python3 --version
+          pip --version
+          pip3 --version
+
+          which python3
+          which pip
+          which pip3
